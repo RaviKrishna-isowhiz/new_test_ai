@@ -6,6 +6,10 @@ import { getUser } from "@/lib/auth";
 import { ColDef } from 'ag-grid-community';
 import { useTheme } from "@/contexts/ThemeContext";
 import { DataTable } from '../../../components/DataTable';
+import { KPICard } from '../../../components/KPICard';
+import { StatusBadge } from '../../../components/StatusBadge';
+import { DetailDrawer } from '../../../components/DetailDrawer';
+import { UploadArea } from '../../../components/UploadArea';
 import { ENDPOINTS } from '@/config/api';
 
 // Helper component for rendering a single invoice in detail view

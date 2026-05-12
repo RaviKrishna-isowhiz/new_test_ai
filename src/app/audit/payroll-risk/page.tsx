@@ -8,6 +8,9 @@ import { DataTable } from '@/components/DataTable';
 import { ColDef } from 'ag-grid-community';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useToast } from '@/contexts/ToastContext';
+import { KPICard } from '@/components/KPICard';
+import { StatusBadge } from '@/components/StatusBadge';
+import { UploadArea } from '@/components/UploadArea';
 import {
   Chart as ChartJS,
   ArcElement,

@@ -5,9 +5,14 @@ import { getUser } from "@/lib/auth";
 import React, { useRef, useState, useMemo } from 'react';
 import { ColDef } from 'ag-grid-community';
 import { useTheme } from "@/contexts/ThemeContext";
+import { PieChart, Pie, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 
 import logger from '@/lib/logger';
 import { DataTable } from '../../../components/DataTable';
+import { KPICard } from '../../../components/KPICard';
+import { StatusBadge } from '../../../components/StatusBadge';
+import { UploadArea } from '../../../components/UploadArea';
+import { DetailDrawer } from '../../../components/DetailDrawer';
 import { ENDPOINTS } from '@/config/api';
 
 // TypeScript declarations for Speech Recognition API
@@ -43,6 +48,10 @@ export default function AnomalyDetectionPage() {
     // Export dropdown state
     const [showExportDropdown, setShowExportDropdown] = useState(false);
     const [isExportingPDF, setIsExportingPDF] = useState(false);
+    
+    // Detail drawer state
+    const [selectedRow, setSelectedRow] = useState<any>(null);
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
     // Debug: Log when PDF loading state changes
     useEffect(() => {
@@ -156,6 +165,34 @@ export default function AnomalyDetectionPage() {
         sortable: true,
         resizable: true,
     };
+
+    // Compute chart data
+    const chartData = useMemo(() => {
+        if (!rowData || rowData.length === 0) return { riskDistribution: [], anomalyTypes: [] };
+        
+        // Risk score distribution
+        const riskBuckets = { 'High (0.7+)': 0, 'Medium (0.4-0.7)': 0, 'Low (<0.4)': 0 };
+        rowData.forEach((row: any) => {
+            const score = parseFloat(row.rf_score) || 0;
+            if (score >= 0.7) riskBuckets['High (0.7+)']++;
+            else if (score >= 0.4) riskBuckets['Medium (0.4-0.7)']++;
+            else riskBuckets['Low (<0.4)']++;
+        });
+
+        const riskDistribution = Object.entries(riskBuckets).map(([name, value]) => ({
+            name,
+            value,
+            fill: name.includes('High') ? '#ef4444' : name.includes('Medium') ? '#f97316' : '#22c55e'
+        }));
+
+        return { riskDistribution };
+    }, [rowData]);
+
+    // Anomaly rate calculation
+    const anomalyRate = useMemo(() => {
+        if (!originalTotals || originalTotals.total_rows === 0) return 0;
+        return ((originalTotals.total_anomalies / originalTotals.total_rows) * 100).toFixed(1);
+    }, [originalTotals]);
 
     // Helper function to get filtered data from AG-Grid
     const getFilteredData = () => {
@@ -574,27 +611,69 @@ export default function AnomalyDetectionPage() {
                         {apiResponseData ? 'Anomaly Detection Results' : ''}
                     </h2>
                     {apiResponseData && (
-                        <div className="mb-2 flex flex-col md:flex-row gap-4 justify-start">
-                            {/* Total Rows Alert */}
-                            <div className="flex items-center p-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
-                                <svg className="flex-shrink-0 w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"></path>
-                                </svg>
-                                <div>
-                                    <span className="font-medium">Total Rows:</span>
-                                    <span className="ml-2 font-bold text-lg">{apiResponseData.total_rows || 0}</span>
-                                </div>
+                        <div className="space-y-6">
+                            {/* KPI Cards */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <KPICard
+                                    title="Total Transactions"
+                                    value={apiResponseData.total_rows || 0}
+                                    subtext="Rows analyzed"
+                                    icon="📊"
+                                    backgroundColor="from-blue-50 to-cyan-50"
+                                    textColor="text-blue-900"
+                                    accentColor="text-blue-600"
+                                />
+                                <KPICard
+                                    title="Anomalies Detected"
+                                    value={apiResponseData.total_anomalies || 0}
+                                    subtext={`${anomalyRate}% anomaly rate`}
+                                    icon="🚨"
+                                    trend={parseFloat(String(anomalyRate)) > 5 ? 'up' : 'down'}
+                                    backgroundColor="from-red-50 to-orange-50"
+                                    textColor="text-red-900"
+                                    accentColor="text-red-600"
+                                />
+                                <KPICard
+                                    title="Avg Risk Score"
+                                    value={(rowData.reduce((sum: number, row: any) => sum + (parseFloat(row.rf_score) || 0), 0) / (rowData.length || 1)).toFixed(3)}
+                                    subtext={`From ${rowData.length} records`}
+                                    icon="⚠️"
+                                    backgroundColor="from-amber-50 to-yellow-50"
+                                    textColor="text-amber-900"
+                                    accentColor="text-amber-600"
+                                />
                             </div>
-                            {/* Total Anomalies Alert */}
-                            <div className="flex items-center p-4 text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
-                                <svg className="flex-shrink-0 w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"></path>
-                                </svg>
-                                <div>
-                                    <span className="font-medium">Total Anomalies:</span>
-                                    <span className="ml-2 font-bold text-lg">{apiResponseData.total_anomalies || 0}</span>
+
+                            {/* Risk Distribution Chart */}
+                            {chartData.riskDistribution.length > 0 && (
+                                <div className={`
+                                    rounded-lg border ${isDark ? 'border-slate-700 bg-slate-800' : 'border-slate-200 bg-white'}
+                                    p-6 shadow-md
+                                `}>
+                                    <h3 className={`text-lg font-bold mb-4 ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
+                                        Risk Score Distribution
+                                    </h3>
+                                    <ResponsiveContainer width="100%" height={300}>
+                                        <PieChart>
+                                            <Pie
+                                                data={chartData.riskDistribution}
+                                                cx="50%"
+                                                cy="50%"
+                                                labelLine={false}
+                                                label={({ name, value }) => `${name}: ${value}`}
+                                                outerRadius={80}
+                                                fill="#8884d8"
+                                                dataKey="value"
+                                            >
+                                                {chartData.riskDistribution.map((entry: any, index: number) => (
+                                                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                                                ))}
+                                            </Pie>
+                                            <Tooltip />
+                                        </PieChart>
+                                    </ResponsiveContainer>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     )}
 

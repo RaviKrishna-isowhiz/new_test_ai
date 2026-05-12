@@ -9,6 +9,9 @@ import { useToast } from "@/contexts/ToastContext";
 import logger from '@/lib/logger';
 import { ENDPOINTS } from '@/config/api';
 import { DataTable } from "@/components/DataTable";
+import { KPICard } from "@/components/KPICard";
+import { StatusBadge } from "@/components/StatusBadge";
+import { DetailDrawer } from "@/components/DetailDrawer";
 import {
     Chart as ChartJS,
     ArcElement,
