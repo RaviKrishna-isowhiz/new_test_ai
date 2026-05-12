@@ -57,7 +57,7 @@ export default function DashboardPage() {
         grid: { display: false },
         ticks: { 
           color: isDark ? '#94a3b8' : '#64748b',
-          font: { weight: '600' as const }
+          font: { weight: 600 as any }
         }
       },
       y: {

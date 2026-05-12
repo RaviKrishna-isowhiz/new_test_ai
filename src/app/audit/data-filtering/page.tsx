@@ -5,8 +5,14 @@ import { getUser } from "@/lib/auth";
 import React, { useRef, useState, useMemo } from 'react';
 import { ColDef } from 'ag-grid-community';
 import { useTheme } from "@/contexts/ThemeContext";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
 import logger from '@/lib/logger';
 import { DataTable } from '../../../components/DataTable';
+import { KPICard } from '../../../components/KPICard';
+import { StatusBadge } from '../../../components/StatusBadge';
+import { UploadArea } from '../../../components/UploadArea';
+import { FilterPanel } from '../../../components/FilterPanel';
 import { ENDPOINTS } from '@/config/api';
 
 // TypeScript declarations for Speech Recognition API
