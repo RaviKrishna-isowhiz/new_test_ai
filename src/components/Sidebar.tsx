@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTheme } from "@/contexts/ThemeContext";
+import { typography } from "@/styles/typography";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -60,44 +61,53 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className={`${isCollapsed ? 'w-20' : 'w-64'} bg-white dark:bg-slate-900 border-r border-slate-100 dark:border-slate-800 hidden md:flex flex-col h-full shrink-0 shadow-sm transition-all duration-300 relative ${isDark ? 'dark-mode-active' : ''}`}>
-      <div className={`p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-center relative min-h-[64px]`}>
+    <aside className={`${isCollapsed ? 'w-20' : 'w-64'} bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 hidden md:flex flex-col h-full shrink-0 transition-all duration-300 ${isDark ? 'dark-mode-active' : ''}`}>
+      {/* Header */}
+      <div className="border-b border-slate-200 dark:border-slate-800 px-4 py-5 flex items-center justify-between">
         {!isCollapsed && (
-          <div className="flex items-center justify-center w-full">
-            <h2 className="text-xs font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest truncate">Audit Suite</h2>
-            <button 
-              onClick={() => setIsCollapsed(!isCollapsed)}
-              className="absolute right-4 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 rounded-full p-1.5 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors z-20"
-            >
-              <svg 
-                className="w-4 h-4 text-slate-600 dark:text-slate-400 transform transition-transform duration-300" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-indigo-600 dark:bg-indigo-500 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 3.062v2.332c0 .322-.033.646-.099.967a28.697 28.697 0 01-1.979 5.25 5.83 5.83 0 01-2.804 2.202 5.83 5.83 0 01-2.997 0 5.83 5.83 0 01-2.804-2.202 28.7 28.7 0 01-1.979-5.25 10.87 10.87 0 01-.099-.967V6.517a3.066 3.066 0 012.812-3.062zM9 13a1 1 0 11-2 0 1 1 0 012 0z" clipRule="evenodd" />
               </svg>
-            </button>
+            </div>
+            <h2 className={`${typography.cardTitle.full} truncate`}>Audit Suite</h2>
           </div>
         )}
+
         {isCollapsed && (
-          <button 
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 rounded-full p-1.5 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors z-20"
-          >
-            <svg 
-              className="w-4 h-4 text-slate-600 dark:text-slate-400 transform transition-transform duration-300 rotate-180" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          <div className="w-8 h-8 bg-indigo-600 dark:bg-indigo-500 rounded-lg flex items-center justify-center flex-shrink-0 mx-auto">
+            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 3.062v2.332c0 .322-.033.646-.099.967a28.697 28.697 0 01-1.979 5.25 5.83 5.83 0 01-2.804 2.202 5.83 5.83 0 01-2.997 0 5.83 5.83 0 01-2.804-2.202 28.7 28.7 0 01-1.979-5.25 10.87 10.87 0 01-.099-.967V6.517a3.066 3.066 0 012.812-3.062zM9 13a1 1 0 11-2 0 1 1 0 012 0z" clipRule="evenodd" />
             </svg>
-          </button>
+          </div>
         )}
+
+        <button
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors flex-shrink-0"
+          title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+        >
+          <svg
+            className={`w-5 h-5 text-slate-600 dark:text-slate-400 transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
       </div>
-      <div className="flex-1 overflow-y-auto py-4 overflow-x-hidden">
-        <nav className="space-y-2 px-3">
+
+      {/* Navigation */}
+      <nav className="flex-1 overflow-y-auto py-4 px-2">
+        {!isCollapsed && (
+          <div className="px-3 py-2 mb-3">
+            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Modules</p>
+          </div>
+        )}
+
+        <div className="space-y-1">
           {links.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -105,24 +115,22 @@ export default function Sidebar() {
                 key={link.href}
                 href={link.href}
                 title={isCollapsed ? link.label : ''}
-                className={`flex items-center rounded-xl transition-all duration-200 group ${isCollapsed ? 'justify-center p-3' : 'px-4 py-3'} ${
-                  isActive 
-                    ? 'bg-blue-50 dark:bg-slate-800 text-blue-700 dark:text-blue-400 shadow-sm ring-1 ring-blue-100 dark:ring-slate-700' 
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-navy dark:hover:text-white'
-                }`}
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors duration-200 ${
+                  isActive
+                    ? 'bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 font-semibold'
+                    : 'text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50'
+                } ${isCollapsed ? 'justify-center px-2' : ''}`}
               >
                 {link.icon}
-                {!isCollapsed && <div className="ml-3 flex-1 font-bold text-sm truncate">{link.label}</div>}
-                {!isCollapsed && isActive && (
-                  <svg className="w-4 h-4 text-blue-600 dark:text-blue-400 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                )}
+                {!isCollapsed && <span className={`${typography.navItem.full} flex-1 truncate`}>{link.label}</span>}
               </Link>
             );
           })}
-        </nav>
-      </div>
+        </div>
+      </nav>
+
+      {/* Footer Divider */}
+      <div className="border-t border-slate-200 dark:border-slate-800" />
     </aside>
   );
 }
