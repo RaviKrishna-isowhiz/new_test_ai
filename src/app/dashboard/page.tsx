@@ -12,6 +12,7 @@ import {
   Legend,
 } from "chart.js";
 import { useTheme } from "@/contexts/ThemeContext";
+import { typography } from "@/styles/typography";
 import {
   AreaChart,
   Area,
@@ -100,8 +101,8 @@ export default function DashboardPage() {
       <div className="w-full flex flex-col gap-6">
         {/* Header */}
         <div>
-          <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-2">Dashboard</h1>
-          <p className="text-slate-600 dark:text-slate-400 text-sm">Welcome back! Here&apos;s your audit summary.</p>
+          <h1 className={`${typography.pageTitle.full} mb-2`}>Dashboard</h1>
+          <p className={`${typography.body.full}`}>Welcome back! Here&apos;s your audit summary.</p>
         </div>
 
         {/* KPI Cards Grid - 2x3 */}
@@ -110,8 +111,8 @@ export default function DashboardPage() {
           <div className="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <p className="text-slate-600 dark:text-slate-400 text-sm font-medium mb-1">Anomalies Detected</p>
-                <h3 className="text-3xl font-bold text-slate-900 dark:text-white">{dashboardData.anomalyFiles.current}</h3>
+                <p className={`${typography.kpiLabel.full} mb-1`}>Anomalies Detected</p>
+                <h3 className={`${typography.kpiValue.full}`}>{dashboardData.anomalyFiles.current}</h3>
               </div>
               <div className="p-3 bg-red-100 dark:bg-red-900/30 rounded-lg">
                 <svg className="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -131,8 +132,8 @@ export default function DashboardPage() {
           <div className="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <p className="text-slate-600 dark:text-slate-400 text-sm font-medium mb-1">Invoices Processed</p>
-                <h3 className="text-3xl font-bold text-slate-900 dark:text-white">{dashboardData.invoicesProcessed.current}</h3>
+                <p className={`${typography.kpiLabel.full} mb-1`}>Invoices Processed</p>
+                <h3 className={`${typography.kpiValue.full}`}>{dashboardData.invoicesProcessed.current}</h3>
               </div>
               <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
                 <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -152,8 +153,8 @@ export default function DashboardPage() {
           <div className="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <p className="text-slate-600 dark:text-slate-400 text-sm font-medium mb-1">Transactions Reconciled</p>
-                <h3 className="text-3xl font-bold text-slate-900 dark:text-white">{dashboardData.bankReconciled.current}</h3>
+                <p className={`${typography.kpiLabel.full} mb-1`}>Transactions Reconciled</p>
+                <h3 className={`${typography.kpiValue.full}`}>{dashboardData.bankReconciled.current}</h3>
               </div>
               <div className="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
                 <svg className="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -173,8 +174,8 @@ export default function DashboardPage() {
           <div className="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <p className="text-slate-600 dark:text-slate-400 text-sm font-medium mb-1">Total Transactions</p>
-                <h3 className="text-3xl font-bold text-slate-900 dark:text-white">{dashboardData.totalTransactions.value.toLocaleString()}</h3>
+                <p className={`${typography.kpiLabel.full} mb-1`}>Total Transactions</p>
+                <h3 className={`${typography.kpiValue.full}`}>{dashboardData.totalTransactions.value.toLocaleString()}</h3>
               </div>
               <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
                 <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -194,8 +195,8 @@ export default function DashboardPage() {
           <div className="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <p className="text-slate-600 dark:text-slate-400 text-sm font-medium mb-1">Processing Success Rate</p>
-                <h3 className="text-3xl font-bold text-slate-900 dark:text-white">{dashboardData.successRate.value}%</h3>
+                <p className={`${typography.kpiLabel.full} mb-1`}>Processing Success Rate</p>
+                <h3 className={`${typography.kpiValue.full}`}>{dashboardData.successRate.value}%</h3>
               </div>
               <div className="p-3 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg">
                 <svg className="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -212,8 +213,8 @@ export default function DashboardPage() {
           <div className="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <p className="text-slate-600 dark:text-slate-400 text-sm font-medium mb-1">Avg Processing Time</p>
-                <h3 className="text-3xl font-bold text-slate-900 dark:text-white">{dashboardData.avgProcessingTime.value}</h3>
+                <p className={`${typography.kpiLabel.full} mb-1`}>Avg Processing Time</p>
+                <h3 className={`${typography.kpiValue.full}`}>{dashboardData.avgProcessingTime.value}</h3>
               </div>
               <div className="p-3 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
                 <svg className="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -234,7 +235,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Weekly Trend Chart */}
           <div className="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Weekly Transaction Trend</h3>
+            <h3 className={`${typography.cardTitle.full} mb-4`}>Weekly Transaction Trend</h3>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={timeSeriesData} margin={{ top: 10, right: 30, left: 0, bottom: 10 }}>
@@ -255,7 +256,7 @@ export default function DashboardPage() {
 
           {/* Comparison Chart */}
           <div className="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Processing Metrics</h3>
+            <h3 className={`${typography.cardTitle.full} mb-4`}>Processing Metrics Comparison</h3>
             <div className="relative h-64 w-full">
               <Bar
                 data={{

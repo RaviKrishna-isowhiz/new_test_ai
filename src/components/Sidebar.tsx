@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTheme } from "@/contexts/ThemeContext";
+import { typography } from "@/styles/typography";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -60,58 +61,53 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className={`${isCollapsed ? 'w-20' : 'w-64'} bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 hidden md:flex flex-col h-full shrink-0 transition-all duration-300 relative ${isDark ? 'dark-mode-active' : ''}`}>
-      {/* Logo Header */}
-      <div className={`bg-gradient-to-br from-navy to-indigo dark:from-slate-800 dark:to-slate-900 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between relative px-4 py-4 min-h-[80px]`}>
+    <aside className={`${isCollapsed ? 'w-20' : 'w-64'} bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 hidden md:flex flex-col h-full shrink-0 transition-all duration-300 ${isDark ? 'dark-mode-active' : ''}`}>
+      {/* Header */}
+      <div className="border-b border-slate-200 dark:border-slate-800 px-4 py-5 flex items-center justify-between">
         {!isCollapsed && (
-          <div className="flex items-center gap-3 flex-1 min-w-0">
-            {/* Logo Circle */}
-            <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-indigo-600 dark:bg-indigo-500 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 3.062v2.332c0 .322-.033.646-.099.967a28.697 28.697 0 01-1.979 5.25 5.83 5.83 0 01-2.804 2.202 5.83 5.83 0 01-2.997 0 5.83 5.83 0 01-2.804-2.202 28.7 28.7 0 01-1.979-5.25 10.87 10.87 0 01-.099-.967V6.517a3.066 3.066 0 012.812-3.062zM9 13a1 1 0 11-2 0 1 1 0 012 0z" clipRule="evenodd" />
               </svg>
             </div>
-            {/* Brand Text */}
-            <div className="flex-1 min-w-0">
-              <h1 className="text-sm font-bold text-white truncate">Audit Suite</h1>
-              <p className="text-xs text-indigo-200 truncate">Enterprise</p>
-            </div>
+            <h2 className={`${typography.cardTitle.full} truncate`}>Audit Suite</h2>
           </div>
         )}
-        
+
         {isCollapsed && (
-          <div className="w-10 h-10 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg mx-auto">
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+          <div className="w-8 h-8 bg-indigo-600 dark:bg-indigo-500 rounded-lg flex items-center justify-center flex-shrink-0 mx-auto">
+            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 3.062v2.332c0 .322-.033.646-.099.967a28.697 28.697 0 01-1.979 5.25 5.83 5.83 0 01-2.804 2.202 5.83 5.83 0 01-2.997 0 5.83 5.83 0 01-2.804-2.202 28.7 28.7 0 01-1.979-5.25 10.87 10.87 0 01-.099-.967V6.517a3.066 3.066 0 012.812-3.062zM9 13a1 1 0 11-2 0 1 1 0 012 0z" clipRule="evenodd" />
             </svg>
           </div>
         )}
 
-        {/* Collapse Button */}
-        <button 
+        <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className={`absolute top-4 ${isCollapsed ? 'left-1/2 -translate-x-1/2' : 'right-4'} bg-white/20 backdrop-blur-sm hover:bg-white/30 border border-white/10 rounded-lg p-1.5 transition-all duration-200 z-20`}
-          title={isCollapsed ? "Expand" : "Collapse"}
+          className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors flex-shrink-0"
+          title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
-          <svg 
-            className={`w-4 h-4 text-white transform transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`}
-            fill="none" 
-            stroke="currentColor" 
+          <svg
+            className={`w-5 h-5 text-slate-600 dark:text-slate-400 transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`}
+            fill="none"
+            stroke="currentColor"
             viewBox="0 0 24 24"
           >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
       </div>
-      <div className="flex-1 overflow-y-auto py-6 overflow-x-hidden">
-        <nav className="space-y-1.5 px-3">
-          {/* Navigation Label */}
-          {!isCollapsed && (
-            <div className="px-4 py-2 mb-2">
-              <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Modules</p>
-            </div>
-          )}
-          
+
+      {/* Navigation */}
+      <nav className="flex-1 overflow-y-auto py-4 px-2">
+        {!isCollapsed && (
+          <div className="px-3 py-2 mb-3">
+            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Modules</p>
+          </div>
+        )}
+
+        <div className="space-y-1">
           {links.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -119,67 +115,22 @@ export default function Sidebar() {
                 key={link.href}
                 href={link.href}
                 title={isCollapsed ? link.label : ''}
-                className={`flex items-center rounded-lg transition-all duration-200 group relative overflow-hidden ${isCollapsed ? 'justify-center p-3 mx-1' : 'px-4 py-2.5 gap-3'} ${
-                  isActive 
-                    ? 'bg-gradient-to-r from-indigo-50 to-indigo-100/50 dark:from-indigo-950/40 dark:to-indigo-900/20 text-indigo-700 dark:text-indigo-300 font-semibold shadow-sm' 
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
-                }`}
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors duration-200 ${
+                  isActive
+                    ? 'bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 font-semibold'
+                    : 'text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50'
+                } ${isCollapsed ? 'justify-center px-2' : ''}`}
               >
-                {/* Active indicator */}
-                {isActive && (
-                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-500 to-indigo-600" />
-                )}
-                
-                {/* Icon */}
-                <div className={`flex-shrink-0 w-5 h-5 ${isCollapsed ? '' : 'ml-1'}`}>
-                  {link.icon}
-                </div>
-                
-                {/* Label */}
-                {!isCollapsed && (
-                  <span className="flex-1 text-sm font-medium truncate">{link.label}</span>
-                )}
-                
-                {/* Chevron on active */}
-                {!isCollapsed && isActive && (
-                  <svg className="w-4 h-4 flex-shrink-0 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                  </svg>
-                )}
+                {link.icon}
+                {!isCollapsed && <span className={`${typography.navItem.full} flex-1 truncate`}>{link.label}</span>}
               </Link>
             );
           })}
-        </nav>
-      </div>
+        </div>
+      </nav>
 
-      {/* Footer Section */}
-      <div className="border-t border-slate-200 dark:border-slate-800 px-3 py-4 space-y-3">
-        {!isCollapsed && (
-          <div className="px-3 py-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
-            <div className="flex items-start gap-2">
-              <div className="flex-shrink-0">
-                <svg className="w-5 h-5 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold text-slate-900 dark:text-white">Version 1.0</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400">Enterprise Edition</p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {isCollapsed && (
-          <div className="flex justify-center">
-            <div className="w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center border border-slate-200 dark:border-slate-700">
-              <svg className="w-4 h-4 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-          </div>
-        )}
-      </div>
+      {/* Footer Divider */}
+      <div className="border-t border-slate-200 dark:border-slate-800" />
     </aside>
   );
 }
